@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4571E630216A94FD0073A4E1 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4571E62F216A94FD0073A4E1 /* DetailViewController.m */; };
 		459F204D216A58E400C025CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 459F204C216A58E400C025CD /* AppDelegate.m */; };
 		459F2050216A58E400C025CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459F204F216A58E400C025CD /* ViewController.m */; };
 		459F2053216A58E400C025CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 459F2051216A58E400C025CD /* Main.storyboard */; };
 		459F2055216A58E500C025CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 459F2054216A58E500C025CD /* Assets.xcassets */; };
 		459F2058216A58E500C025CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 459F2056216A58E500C025CD /* LaunchScreen.storyboard */; };
 		459F205B216A58E500C025CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 459F205A216A58E500C025CD /* main.m */; };
+		459F2066216A80C100C025CD /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 459F2065216A80C100C025CD /* TableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4571E62E216A94FD0073A4E1 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		4571E62F216A94FD0073A4E1 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		459F2048216A58E400C025CD /* MovaviTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovaviTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		459F204B216A58E400C025CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		459F204C216A58E400C025CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -26,6 +30,8 @@
 		459F2057216A58E500C025CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		459F2059216A58E500C025CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		459F205A216A58E500C025CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		459F2064216A80C100C025CD /* TableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		459F2065216A80C100C025CD /* TableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +66,12 @@
 			children = (
 				459F204B216A58E400C025CD /* AppDelegate.h */,
 				459F204C216A58E400C025CD /* AppDelegate.m */,
+				4571E62E216A94FD0073A4E1 /* DetailViewController.h */,
+				4571E62F216A94FD0073A4E1 /* DetailViewController.m */,
 				459F204E216A58E400C025CD /* ViewController.h */,
 				459F204F216A58E400C025CD /* ViewController.m */,
+				459F2064216A80C100C025CD /* TableViewCell.h */,
+				459F2065216A80C100C025CD /* TableViewCell.m */,
 				459F2051216A58E400C025CD /* Main.storyboard */,
 				459F2054216A58E500C025CD /* Assets.xcassets */,
 				459F2056216A58E500C025CD /* LaunchScreen.storyboard */,
@@ -141,9 +151,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4571E630216A94FD0073A4E1 /* DetailViewController.m in Sources */,
 				459F2050216A58E400C025CD /* ViewController.m in Sources */,
 				459F205B216A58E500C025CD /* main.m in Sources */,
 				459F204D216A58E400C025CD /* AppDelegate.m in Sources */,
+				459F2066216A80C100C025CD /* TableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +232,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -272,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -286,6 +298,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LMBS6AMH52;
 				INFOPLIST_FILE = MovaviTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LMBS6AMH52;
 				INFOPLIST_FILE = MovaviTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

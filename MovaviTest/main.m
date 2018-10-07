@@ -2,7 +2,7 @@
 //  main.m
 //  MovaviTest
 //
-//  Created by Fuhrer_SS on 07.10.2018.
+//  Created by Jazzet on 07.10.2018.
 //  Copyright © 2018 Jazzet. All rights reserved.
 //
 
