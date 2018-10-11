@@ -18,14 +18,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.detailViewText.text = _textContainer;
+
+    NSAttributedString * attrString = [[NSAttributedString alloc] initWithData:[_textContainer dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    
+    self.detailViewText.attributedText = attrString;
     self.titleExtend.text = _titleContainer;
     [_button addTarget:self
-               action:@selector(openUrl1)
+               action:@selector(openUrl)
      forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) openUrl1 {
+- (void) openUrl {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url] options:@{} completionHandler:nil];
 }
 

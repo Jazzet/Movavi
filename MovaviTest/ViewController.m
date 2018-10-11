@@ -17,7 +17,9 @@
     NSMutableString *title;
     NSMutableString *link;
     NSMutableString *description;
-    NSString *element;
+    NSMutableString *pubDate;
+    NSMutableString *image;
+    NSString *currentElement;
     NSInteger totalEntries;
 }
 
@@ -37,13 +39,17 @@
     self.noMoreResults =NO;
     self.dataArray =[[NSMutableArray alloc] init];
     feeds = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:@"https://meduza.io/rss/podcasts/meduza-v-kurse"];
-    parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-    [parser setDelegate:self];
-    [parser setShouldResolveExternalEntities:NO];
-    [parser parse];
     self.tableView.rowHeight = 210;
     
+    NSArray *rssArray = @[@"https://habr.com/rss/hubs/all/", @"https://meduza.io/rss/podcasts/meduza-v-kurse"];
+    for (NSString *stringWithUrl in rssArray)
+    {
+        NSURL *url = [NSURL URLWithString:stringWithUrl];
+        parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+        [parser setShouldResolveExternalEntities:NO];
+        [parser setDelegate:self];
+        [parser parse];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -54,8 +60,19 @@
     
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (totalEntries != 0) {
-        if(indexPath.row <[feeds count]){
+        if(indexPath.row < [feeds count]){
+            
             cell.previewDescription.text = [[feeds objectAtIndex:indexPath.row] objectForKey: @"title"];
+            
+            dispatch_async(dispatch_get_global_queue(0,0), ^{
+                NSString *test = [[self->feeds objectAtIndex:indexPath.row] objectForKey: @"image"];
+                NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: test]];
+                if (imageData == nil)
+                    return;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.previewImage.image = [UIImage imageWithData: imageData];
+                });
+            });
         }
     }
     return cell;
@@ -87,53 +104,56 @@
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
     
-    element = elementName;
-    
-    if ([element isEqualToString:@"item"]) {
-        
+    currentElement = elementName;
+    if ([currentElement isEqualToString:@"item"]) {
         item    = [[NSMutableDictionary alloc] init];
         title   = [[NSMutableString alloc] init];
         link    = [[NSMutableString alloc] init];
         description    = [[NSMutableString alloc] init];
+        pubDate    = [[NSMutableString alloc] init];
     }
-}
-
-
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-    
-    if ([elementName isEqualToString:@"item"]) {
-        
-        [item setObject:title forKey:@"title"];
-        [item setObject:link forKey:@"link"];
-        [item setObject:description forKey:@"description"];
-        
-        [feeds addObject:[item copy]];
-        
-    }
-    
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
-    NSLog(@"%@", element);
-    if ([element isEqualToString:@"title"]) {
+    if ([currentElement isEqualToString:@"title"]) {
         [title appendString:string];
-    } else if ([element isEqualToString:@"link"]) {
+    } else if ([currentElement isEqualToString:@"link"]) {
         [link appendString:string];
-    } else if ([element isEqualToString:@"description"]) {
+    } else if ([currentElement isEqualToString:@"description"]) {
         [description appendString:string];
+    } else if ([currentElement isEqualToString:@"pubDate"]) {
+        [pubDate appendString:string];
     }
 }
 
-- (void)parserDidEndDocument:(NSXMLParser *)parser {
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     
-    [self.tableView reloadData];
+    if ([elementName isEqualToString:@"item"]) {
+        [item setObject:title forKey:@"title"];
+        [item setObject:link forKey:@"link"];
+        [item setObject:description forKey:@"description"];
+        [item setObject:pubDate forKey:@"pubDate"];
+        
+        [feeds addObject:[item copy]];
+    }
     
 }
+
+
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"pubDate" ascending:TRUE];
+    [feeds sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
